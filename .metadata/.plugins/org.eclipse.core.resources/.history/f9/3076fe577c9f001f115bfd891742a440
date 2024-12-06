@@ -1,0 +1,12 @@
+package com.interfaceassignments;
+
+/**
+*Author :Kalakoti.Reddy
+*Date   :10-Nov-2024
+*Time   :9:25:49 pm
+*Email  :Kalakoti.Reddy@coforge.com
+*/
+
+public interface Truck {
+
+}

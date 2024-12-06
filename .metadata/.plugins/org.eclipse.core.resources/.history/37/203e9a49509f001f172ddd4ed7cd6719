@@ -1,0 +1,133 @@
+package com.cruddemo;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.mysql.cj.xdevapi.Schema.CreateCollectionOptions;
+
+/**
+*Author :Kalakoti.Reddy
+*Date   :07-Nov-2024
+*Time   :5:11:36 pm
+*Email  :Kalakoti.Reddy@coforge.com
+*/
+
+public class Employee {
+	
+
+
+    Connection con;
+	PreparedStatement ps;
+	Statement st;
+	ResultSet res;
+	
+	
+	
+	int count;
+	
+	
+	 
+	
+	
+	public Connection getConnection() throws Exception
+	{
+		con=ConnectionUtil.createConnection();
+	
+		return con;
+	}
+	
+	public void insertEmployee(String name, String city, String contact) throws Exception 
+	{
+		con=ConnectionUtil.createConnection();
+		System.out.println("**************** Insert new Employees*****************");
+		
+		
+		String insert="insert into employee(emp_name,city,contactno) values(?,?,?)";
+		
+		 ps=con.prepareStatement(insert);
+		 
+		 ps.setString(1, name);
+		 ps.setString(2, city);
+		 ps.setString(3,contact);
+		 
+		 count=ps.executeUpdate(insert);
+		System.out.println("Record inserted sucessfully");
+		 
+		
+		
+	}
+	
+	//Display
+	public void getEmployee() throws SQLException 
+	{
+	 System.out.println("**************** Display Employees*****************");
+	 
+	  res=ps.executeQuery("Select * from employee");
+	  
+	  
+	 
+	  while(res.next())
+		{
+			System.out.println(res.getInt(1)+"\t"+res.getString(2)+"\t"+res.getString(3)+
+					"\t"+res.getLong(4));
+		}
+	 
+	 
+	}
+	
+	
+	
+	
+	//update
+	public void updateEmployee(int id,String city) throws SQLException
+	{
+		System.out.println("**************** Update Employees*****************");
+		
+		String update="update employee set city=? where emp_id=?";
+		 ps=con.prepareStatement(update);
+		
+			
+			ps.setInt(1, id);
+			ps.setString(2,city);
+			
+			count=ps.executeUpdate();
+			System.out.println(String.format("Row affected : %d", count));
+	}
+	
+	
+
+  //delete 	
+	public void deleteEmployee(int id) throws SQLException 
+	{
+		System.out.println("**************** Delete Employees*****************");
+		
+		String delete="delete from employee where emp_id=?";
+		
+		ps.setInt(1, id);
+		
+		count=ps.executeUpdate(delete);
+		if(count<0)
+		{
+			System.out.println(count+" Record Deleted ");
+		}
+		else
+		{
+			System.out.println("Records not found");
+		}
+		
+		
+		
+	}
+
+	public void updateEmployeeEmail(int cid)
+	{
+		
+		
+	}
+
+
+}
